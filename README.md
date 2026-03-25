@@ -41,7 +41,7 @@ l'erreur fait partie du processus.
 ### 1. Cloner le projet
 
 ``` bash
-git clone https://gitlab.com/thedyl/crim.git
+git clone https://github.com/FurioGamer/Crim-
 cd crim
 ```
 
