@@ -24,25 +24,40 @@ class Maps:
             command=self.backBtnCLick
         )
 
-
-        play_button = ButtonImage(
+        firstScene = ButtonImage(
             parent_canvas=self.canvas,
             x=(self.screen_width // 2) - 100,
             y=(self.screen_height // 2) - 180,
-            img_normal_path="./assets/main/round.png",
-            img_hover_path="./assets/main/round_hover.png",
+            img_normal_path="./assets/main/round_parc.png",
+            img_hover_path="./assets/main/round_hover_parc.png",
             width=200,
             height=200,
-            command=None
+            command=self.firstScene
         )
 
+        secondScene = ButtonImage(
+            parent_canvas=self.canvas,
+            x=(self.screen_width // 2) + 100,
+            y=(self.screen_height // 2) - 180,
+            img_normal_path="./assets/main/round_serveur.png",
+            img_hover_path="./assets/main/round_hover_serveur.png",
+            width=200,
+            height=200,
+            command=self.secondScene
+        )
 
 
     def backBtnCLick(self):
         from interface.MainMenu import MainMenu
         self.canvas.destroy()
         MainMenu(self.root)
-        
-        # from components.SceneInit import SceneInit
-        # self.canvas.destroy()
-        # SceneInit(self.root, "scene_parc", [])
+    
+    def firstScene(self):
+        from components.SceneInit import SceneInit
+        self.canvas.destroy()
+        SceneInit(self.root, "scene_parc", [])
+
+    def secondScene(self):
+        from components.SceneInit import SceneInit
+        self.canvas.destroy()
+        SceneInit(self.root, "scene_serveur", [])

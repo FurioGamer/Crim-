@@ -4,6 +4,7 @@ from components.Window import Window
 from components.Button import ButtonImage
 import time
 import random
+from components.Music import PlayDing
 
 class SceneInit:
     def __init__(self, root, scene_name, result_final):
@@ -13,6 +14,8 @@ class SceneInit:
 
         self.timer = 10
 
+        self.counter = 0
+
         self.images = "./assets/scene/" + scene_name + ".png"
         self.window = Window(self.root, self.images)
         self.canvas = self.window.canvas
@@ -21,7 +24,27 @@ class SceneInit:
         self.screen_height = self.root.winfo_screenheight()
 
         self.label = tk.Label(text=self.timer, font=('Poppins', 40), fg="orange", background="blue")
-        self.label.place(x=self.screen_width//2, y= self.screen_height//2)
+        self.label.place(x=(self.screen_width//2) - 20, y=50)
+
+        
+        self.labelCount = tk.Label(text=self.counter, font=('Poppins', 40), fg="orange", background="blue")
+        self.labelCount.place(x=50, y=50)
+
+        let = ["object_cahier.png", "object_chaise.png", "object_livre.png", "object_loupe.png", 
+               "object_plaque.png", "object_sablier.png", "object_sac.png", "object_stylo.png"]
+
+        for i in range(len(let)):
+            
+            btnImage = ButtonImage(
+                parent_canvas=self.canvas,
+                x=random.randint(0, self.screen_width - 100),
+                y=random.randint(0, self.screen_height - 100),
+                img_normal_path="./assets/material/" + let[i],
+                img_hover_path="./assets/material/" + let[i],
+                width=130,
+                height=90,
+                command=self.clickObject
+            )
 
         self.updateClock()
 
@@ -38,8 +61,17 @@ class SceneInit:
     def showFinalModal(self):
         myLine = self.canvas.create_rectangle(0, 0, self.screen_width, self.screen_height, fill='black', stipple="gray50")
 
-        random.randint(1, 9)
-            
+        back_btn = ButtonImage(
+            parent_canvas=self.canvas,
+            x=(self.screen_width // 2) - 100,
+            y=(self.screen_height) - 100,
+            img_normal_path="./assets/main/back_btn.png",
+            img_hover_path="./assets/main/back_btn.png",
+            width=200,
+            height=85,
+            command=self.backBtnCLick
+        )
+
 
     def gameIsFinish(self, suspects, waypon):
         if self.isTheCriminal(suspects) and self.isTheWaypon(waypon):
@@ -58,3 +90,13 @@ class SceneInit:
             return True
         else:
             return False
+    
+    def backBtnCLick(self):
+        from interface.MainMenu import MainMenu
+        self.canvas.destroy()
+        MainMenu(self.root)
+    
+    def clickObject(self):
+        PlayDing("./assets/ding_music.mp3")
+        self.counter += 1
+        self.labelCount.configure(text = self.counter)
